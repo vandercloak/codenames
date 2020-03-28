@@ -27,10 +27,10 @@ const Board = ({
         Object.keys(cards).map(word => {
           const { color, clicked, id } = cards[word];
           const reveal = debounce(() => {
-            const notPlayerTurn = winner || team !== gameState.turn;
-            if (notPlayerTurn) {
-              return false;
-            }
+            // const notPlayerTurn = winner || team !== gameState.turn;
+            // if (notPlayerTurn) {
+            //   return false;
+            // }
             cards[word].clicked = true;
             const { winner: newWinner } = getGameStatus(gameState!);
 

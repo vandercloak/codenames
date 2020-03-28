@@ -8,7 +8,8 @@ import {
   Descriptions,
   Typography,
   Tabs,
-  List
+  List,
+  Button
 } from "antd";
 import { createGame, getGameStatus, otherTeam } from "../utils/game";
 import Board from "../components/board";
@@ -21,6 +22,7 @@ import isEqual from "lodash/isEqual";
 import capitalize from "lodash/capitalize";
 import { background } from "../components/card";
 import { GameMenu } from "../components/game-menu";
+import Timer from "react-compound-timer";
 
 const { Paragraph } = Typography;
 const subscribeToGame = `
@@ -44,6 +46,7 @@ const updateState = `
 `;
 
 const Game = ({ id }: { id: string }) => {
+  const [timer, setTimer] = useState(120000);
   const userId = getUserId();
   const [result] = useSubscription({
     query: subscribeToGame,
@@ -131,24 +134,6 @@ const Game = ({ id }: { id: string }) => {
                 </>
               )
             }
-            subTitle={
-              !gameState.winner && !isSpymaster ? (
-                <>
-                  You are on team{" "}
-                  <span style={{ color: background[team as TeamColor].color }}>
-                    {capitalize(team)}
-                  </span>
-                </>
-              ) : (
-                <>
-                  😎You are the spymaster for team{" "}
-                  <span style={{ color: background[team as TeamColor].color }}>
-                    {capitalize(team)}
-                  </span>{" "}
-                  😎
-                </>
-              )
-            }
             extra={[
               <GameMenu
                 gameState={gameState}
@@ -166,6 +151,19 @@ const Game = ({ id }: { id: string }) => {
                 Needs {blue} more
               </Descriptions.Item>
             </Descriptions>
+            <div>
+              <Timer initialTime={timer} direction="backward">
+                {({ reset }: any) => (
+                  <>
+                    <Button onClick={() => reset()}>Reset</Button>
+                    {"  "}
+                    <React.Fragment>
+                      <Timer.Minutes /> minutes <Timer.Seconds /> seconds
+                    </React.Fragment>
+                  </>
+                )}
+              </Timer>
+            </div>
           </PageHeader>
         </Col>
         <Col span={24}>
