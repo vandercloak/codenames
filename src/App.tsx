@@ -9,6 +9,7 @@ import {
 } from "urql";
 import "antd/dist/antd.css";
 import { SubscriptionClient } from "subscriptions-transport-ws";
+import { ThemeProvider } from "./hooks/use-themes";
 
 const subscriptionClient = new SubscriptionClient(
   "wss://codenames-hasura.herokuapp.com/v1/graphql",
@@ -29,6 +30,8 @@ export default function App() {
   const routeResult = useRoutes(routes);
 
   return (
-    <URQLProvider value={client}>{routeResult || "Not Found"} </URQLProvider>
+    <ThemeProvider>
+      <URQLProvider value={client}>{routeResult || "Not Found"} </URQLProvider>
+    </ThemeProvider>
   );
 }

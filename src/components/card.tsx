@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card as ACard } from "antd";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { TeamColor, GameState } from "../types/game";
+import { useThemes } from "../hooks/use-themes";
 import RedCard from "../assets/card-red.png";
 import BlueCard from "../assets/card-blue.png";
 import YellowCard from "../assets/card-yellow.png";
 import BlackCard from "../assets/card-black.png";
-import { TeamColor, GameState, Winner } from "../types/game";
-import { Confetti } from "./confetti";
-import { getPlayer } from "../utils/player";
-import { PlayerState } from "../types/player";
 
-export const background = {
+export const teamCards = {
   red: {
     image: RedCard,
     color: "#ac2a23"
@@ -28,29 +26,29 @@ export const background = {
     color: "#1e1b18"
   }
 };
+
 const Card = ({
   color,
   clicked,
   word,
   reveal,
   gameState,
-  playerState
+  isSpymaster
 }: {
   color: TeamColor;
   clicked: boolean;
   word: string;
   gameState: GameState;
-  playerState: PlayerState;
+  isSpymaster?: boolean;
   reveal: () => boolean;
 }) => {
+  const { theme, darkMode } = useThemes();
   const size = useWindowSize();
   const cardWidth = Math.floor(size.width! / 5 - (size.width! > 1200 ? 10 : 0));
   const cardHeight = Math.floor((cardWidth * 1) / 2);
-  const { isSpymaster } = getPlayer(playerState, gameState);
 
   return (
-    <div style={{ width: "20%" }}>
-      <Confetti winner={gameState?.winner} />
+    <div style={{ width: "20%", cursor: "pointer" }}>
       <ACard
         onClick={() => {
           reveal();
@@ -60,14 +58,15 @@ const Card = ({
           margin: size.width! > 700 ? 5 : 2,
           textAlign: "center",
           height: cardHeight,
-          backgroundImage: `url(${(clicked && background[color].image) ||
+          backgroundImage: `url(${(clicked && teamCards[color].image) ||
             undefined})`,
           backgroundSize: "cover",
-          border:
+          color: isSpymaster ? "#fff" : theme.color,
+          border: theme.border,
+          backgroundColor:
             isSpymaster && !clicked
-              ? `4px solid ${background[color].color}`
-              : "2px solid grey"
-          // backgroundColor: (clicked && background[color].color) || undefined
+              ? teamCards[color].color
+              : theme.backgroundColor
         }}
       >
         <div

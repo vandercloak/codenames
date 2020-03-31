@@ -1,5 +1,5 @@
 import React from "react";
-import Game from "./pages/game";
+import Game from "./pages/game/game";
 
 export const routes = {
   "/": () => <>Homepage</>,

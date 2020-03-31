@@ -1,66 +1,35 @@
 import React from "react";
-import { Menu, Dropdown, Popconfirm } from "antd";
-import {
-  SettingOutlined,
-  UserSwitchOutlined,
-  PlusOutlined
-} from "@ant-design/icons";
+import { Menu, Dropdown, Button, Switch } from "antd";
+import { SettingOutlined, PlusOutlined } from "@ant-design/icons";
 import { GameState } from "../types/game";
-import { getGameStatus, createGame, otherTeam } from "../utils/game";
-import { PlayerState } from "../types/player";
-import { getPlayer } from "../utils/player";
+import { createGame } from "../utils/game";
+import Toggle from "./night-mode-toggle";
+import { useThemes } from "../hooks/use-themes";
+
 export const GameMenu = ({
-  gameState,
-  playerState,
   updateGameState,
-  updatePlayerState
+  isSpymaster,
+  setIsSpymaster
 }: {
+  isSpymaster: boolean;
+  setIsSpymaster: (val: boolean) => void;
   gameState: GameState;
-  playerState: PlayerState;
   updateGameState: (gameState: GameState) => void;
-  updatePlayerState: (playerState: PlayerState) => void;
 }) => {
-  const { team, id } = getPlayer(playerState, gameState);
-
   const actions = {
-    changeTeam: () => {
-      const newState = { ...playerState };
-      const player = newState[team as "red" | "blue"][id];
-      delete newState[team as "red" | "blue"][id];
-
-      if (team === "red") {
-        newState.blue[id] = player;
-      }
-      if (team === "blue") {
-        newState.red[id] = player;
-      }
-
-      updatePlayerState(newState);
-    },
     becomeSpymaster: () => {
-      const newState = { ...gameState };
-
-      newState.spymasters[team as "red" | "blue"] = id;
-
-      updateGameState(newState);
+      setIsSpymaster(true);
     },
     newGame: () => {
+      setIsSpymaster(false);
       updateGameState(createGame());
     },
-    passTurn: () => {
-      const newState = { ...gameState };
-      newState.turn = otherTeam(newState.turn as "red" | "blue");
-      updateGameState(newState);
+    releaseSpymaster: () => {
+      setIsSpymaster(false);
     }
   };
 
   const menuOptions = {
-    changeTeam: (
-      <Menu.Item key="1" onClick={() => actions.changeTeam()}>
-        <UserSwitchOutlined />
-        Change Team
-      </Menu.Item>
-    ),
     becomeSpymaster: (
       <Menu.Item key="2">
         <SettingOutlined />
@@ -72,55 +41,39 @@ export const GameMenu = ({
         <PlusOutlined />
         New Game
       </Menu.Item>
-    ),
-    passTurn: (
-      <Menu.Item key="3" onClick={() => actions.passTurn()}>
-        <UserSwitchOutlined />
-        Pass Turn
-      </Menu.Item>
     )
   };
+  const toggle = (
+    <div style={{ position: "fixed", bottom: 5, left: 5 }}>
+      <Toggle />
+    </div>
+  );
 
-  if (!gameState.spymasters[team as "red" | "blue"]) {
+  if (isSpymaster) {
     return (
+      <>
+        {toggle}
+        <Dropdown.Button
+          overlay={<Menu>{menuOptions.newGame}</Menu>}
+          onClick={() => actions.releaseSpymaster()}
+          icon={<SettingOutlined />}
+        >
+          Relinquish the Job 😞
+        </Dropdown.Button>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {toggle}
       <Dropdown.Button
-        overlay={
-          <Menu>
-            {menuOptions.changeTeam}
-            {menuOptions.newGame}
-            {menuOptions.passTurn}
-          </Menu>
-        }
+        overlay={<Menu>{menuOptions.newGame}</Menu>}
         onClick={() => actions.becomeSpymaster()}
         icon={<SettingOutlined />}
       >
         I'm the Spymaster 😎
       </Dropdown.Button>
-    );
-  } else if (gameState.winner) {
-    return (
-      <Dropdown.Button
-        onClick={() => actions.newGame()}
-        overlay={<Menu>{menuOptions.changeTeam}</Menu>}
-        icon={<PlusOutlined />}
-      >
-        New Game
-      </Dropdown.Button>
-    );
-  }
-
-  return (
-    <Dropdown.Button
-      onClick={() => actions.passTurn()}
-      overlay={
-        <Menu>
-          {menuOptions.changeTeam}
-          {menuOptions.newGame}
-        </Menu>
-      }
-      icon={<SettingOutlined />}
-    >
-      Pass Turn
-    </Dropdown.Button>
+    </>
   );
 };

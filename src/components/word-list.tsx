@@ -13,7 +13,7 @@ const WordList = ({
   spy: string[];
 }) => {
   return (
-    <Row justify="center" style={{ padding: 0 }}>
+    <Row justify="center" style={{ padding: 0 }} className="word-list">
       <Col span={8}>
         <Title level={4}>Red</Title>
         {red.map((word: string) => {
