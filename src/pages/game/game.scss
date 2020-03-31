@@ -1,0 +1,38 @@
+$black: #141414;
+$white: #fff;
+
+.light-theme {
+  .ant-descriptions-item span,
+  .ant-page-header-content div {
+    color: $black !important;
+  }
+
+  .ant-btn-group.ant-dropdown-button button,
+  .ant-btn {
+    background-color: $white !important;
+    color: $black;
+  }
+}
+
+.dark-theme {
+  color: $white !important;
+  .ant-descriptions-item span,
+  .ant-page-header-content div {
+    color: $white !important;
+  }
+
+  .ant-btn-group.ant-dropdown-button button,
+  .ant-btn {
+    background-color: $black !important;
+    color: $white;
+  }
+
+  .ant-tabs-tab {
+    color: $white;
+  }
+  .word-list,
+  .ant-tabs-tab,
+  .ant-typography {
+    color: $white;
+  }
+}
