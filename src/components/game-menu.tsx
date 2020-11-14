@@ -1,10 +1,10 @@
 import React from "react";
-import { Menu, Dropdown, Button, Switch } from "antd";
+import { Menu, Dropdown, Button, Switch, Row, Col } from "antd";
 import { SettingOutlined, PlusOutlined } from "@ant-design/icons";
 import { GameState } from "../types/game";
 import { createGame } from "../utils/game";
 import Toggle from "./night-mode-toggle";
-import { useThemes } from "../hooks/use-themes";
+import QRCode from "qrcode.react";
 
 export const GameMenu = ({
   updateGameState,
@@ -30,12 +30,12 @@ export const GameMenu = ({
   };
 
   const menuOptions = {
-    becomeSpymaster: (
-      <Menu.Item key="2">
-        <SettingOutlined />
-        I'm the Spymaster 😎
-      </Menu.Item>
-    ),
+    // becomeSpymaster: (
+    //   <Menu.Item key="2">
+    //     <SettingOutlined />
+    //     I'm the Spymaster 😎
+    //   </Menu.Item>
+    // ),
     newGame: (
       <Menu.Item key="3" onClick={() => actions.newGame()}>
         <PlusOutlined />
@@ -44,7 +44,7 @@ export const GameMenu = ({
     ),
   };
   const toggle = (
-    <div style={{ position: "fixed", bottom: 5, left: 5, zIndex: 1000 }}>
+    <div style={{ position: "fixed", top: 5, left: 5, zIndex: 1000 }}>
       <Toggle />
     </div>
   );
@@ -67,13 +67,36 @@ export const GameMenu = ({
   return (
     <>
       {toggle}
-      <Dropdown.Button
+      {
+        <div
+          style={{
+            position: "absolute",
+            top: -30,
+            right: 0,
+            textAlign: "right",
+          }}
+        >
+          <Row justify="end">
+            <Col span={24}>
+              <QRCode
+                value={
+                  window.location.origin +
+                  window.location.pathname +
+                  "/spymaster"
+                }
+              />
+            </Col>
+            <Col span={24}>Spymaster scan here ☝️</Col>
+          </Row>
+        </div>
+      }
+      {/* <Dropdown.Button
         overlay={<Menu>{menuOptions.newGame}</Menu>}
         onClick={() => actions.becomeSpymaster()}
         icon={<SettingOutlined />}
       >
         I'm the Spymaster 😎
-      </Dropdown.Button>
+      </Dropdown.Button> */}
     </>
   );
 };

@@ -11,20 +11,20 @@ import BlackCard from "../assets/card-black.png";
 export const teamCards = {
   red: {
     image: RedCard,
-    color: "#ac2a23"
+    color: "#ac2a23",
   },
   blue: {
     image: BlueCard,
-    color: "#0f3c91"
+    color: "#0f3c91",
   },
   yellow: {
     image: YellowCard,
-    color: "#b8ac93"
+    color: "#b8ac93",
   },
   black: {
     image: BlackCard,
-    color: "#1e1b18"
-  }
+    color: "#1e1b18",
+  },
 };
 
 const Card = ({
@@ -33,7 +33,7 @@ const Card = ({
   word,
   reveal,
   gameState,
-  isSpymaster
+  isSpymaster,
 }: {
   color: TeamColor;
   clicked: boolean;
@@ -58,22 +58,25 @@ const Card = ({
           margin: size.width! > 700 ? 5 : 2,
           textAlign: "center",
           height: cardHeight,
-          backgroundImage: `url(${(clicked && teamCards[color].image) ||
-            undefined})`,
+          backgroundImage: `url(${
+            (clicked && teamCards[color].image) || undefined
+          })`,
           backgroundSize: "cover",
           color: isSpymaster ? "#fff" : theme.color,
           border: theme.border,
+          maxHeight: 115,
+          maxWidth: 185,
           backgroundColor:
             isSpymaster && !clicked
               ? teamCards[color].color
-              : theme.backgroundColor
+              : theme.backgroundColor,
         }}
       >
         <div
           style={{
             fontWeight: 700,
             fontSize: 18,
-            margin: "auto"
+            margin: "auto",
           }}
         >
           {!clicked && word.toUpperCase()}

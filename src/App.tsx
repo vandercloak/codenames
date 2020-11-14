@@ -1,6 +1,6 @@
 import React from "react";
 import { useRoutes } from "hookrouter";
-import { routes } from "./routes";
+import CodenameRouter from "./routes";
 import {
   Provider as URQLProvider,
   createClient,
@@ -28,11 +28,11 @@ const client = createClient({
 });
 
 export default function App() {
-  const routeResult = useRoutes(routes);
-
   return (
     <ThemeProvider>
-      <URQLProvider value={client}>{routeResult || "Not Found"} </URQLProvider>
+      <URQLProvider value={client}>
+        <CodenameRouter />
+      </URQLProvider>
     </ThemeProvider>
   );
 }

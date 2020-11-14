@@ -210,7 +210,7 @@ export default function Gather() {
   const enableStartButton = appState === STATE_IDLE;
 
   return (
-    <div className="gather" style={{ alignSelf: "end" }}>
+    <div className="gather">
       {showCall ? (
         // NOTE: for an app this size, it's not obvious that using a Context
         // is the best choice. But for larger apps with deeply-nested components
