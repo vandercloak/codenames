@@ -12,21 +12,17 @@ import {
   List,
   Button,
 } from "antd";
-import { createGame, getGameStatus, otherTeam } from "../../utils/game";
+import { getGameStatus } from "../../utils/game";
 import Board from "../../components/board";
-import { GameState, TeamColor } from "../../types/game";
-import JoinTeam from "../../components/actions/join-team";
+import { GameState } from "../../types/game";
 import NewGame from "../../components/actions/new-game";
-import { getUserId, getPlayer } from "../../utils/player";
+import { getUserId } from "../../utils/player";
 import isEqual from "lodash/isEqual";
-import capitalize from "lodash/capitalize";
 import { GameMenu } from "../../components/game-menu";
-import Timer from "react-compound-timer";
 import { useThemes } from "../../hooks/use-themes";
 import { teamCards } from "../../components/card";
 import Gather from "../../components/gather/gather";
 
-const { Paragraph } = Typography;
 const subscribeToGame = `
   subscription game_by_pk($id: String!) {
     res: game_by_pk(id: $id) {
