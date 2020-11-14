@@ -9,7 +9,7 @@ import { useThemes } from "../hooks/use-themes";
 export const GameMenu = ({
   updateGameState,
   isSpymaster,
-  setIsSpymaster
+  setIsSpymaster,
 }: {
   isSpymaster: boolean;
   setIsSpymaster: (val: boolean) => void;
@@ -26,7 +26,7 @@ export const GameMenu = ({
     },
     releaseSpymaster: () => {
       setIsSpymaster(false);
-    }
+    },
   };
 
   const menuOptions = {
@@ -41,10 +41,10 @@ export const GameMenu = ({
         <PlusOutlined />
         New Game
       </Menu.Item>
-    )
+    ),
   };
   const toggle = (
-    <div style={{ position: "fixed", bottom: 5, left: 5 }}>
+    <div style={{ position: "fixed", bottom: 5, left: 5, zIndex: 1000 }}>
       <Toggle />
     </div>
   );

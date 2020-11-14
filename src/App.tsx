@@ -5,11 +5,12 @@ import {
   Provider as URQLProvider,
   createClient,
   defaultExchanges,
-  subscriptionExchange
+  subscriptionExchange,
 } from "urql";
 import "antd/dist/antd.css";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { ThemeProvider } from "./hooks/use-themes";
+import "./app.scss";
 
 const subscriptionClient = new SubscriptionClient(
   "wss://codenames-hasura.herokuapp.com/v1/graphql",
@@ -21,9 +22,9 @@ const client = createClient({
   exchanges: [
     ...defaultExchanges,
     subscriptionExchange({
-      forwardSubscription: operation => subscriptionClient.request(operation)
-    })
-  ]
+      forwardSubscription: (operation) => subscriptionClient.request(operation),
+    }),
+  ],
 });
 
 export default function App() {
