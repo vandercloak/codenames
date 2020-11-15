@@ -16,6 +16,7 @@
     "node-sass": "^4.13.1",
     "qrcode.react": "^1.0.0",
     "react": "16.12.0",
+    "react-beautiful-dnd": "^13.0.0",
     "react-compound-timer": "^1.2.0",
     "react-dom": "16.12.0",
     "react-dom-confetti": "^0.1.3",
