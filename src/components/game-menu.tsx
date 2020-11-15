@@ -71,7 +71,7 @@ export const GameMenu = ({
         <div
           style={{
             position: "absolute",
-            top: -30,
+            top: 20,
             right: 0,
             textAlign: "right",
           }}
@@ -79,6 +79,7 @@ export const GameMenu = ({
           <Row justify="end">
             <Col span={24}>
               <QRCode
+                style={{ width: 100, height: 100 }}
                 value={
                   window.location.origin +
                   window.location.pathname +

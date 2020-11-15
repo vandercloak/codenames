@@ -13,7 +13,7 @@ import {
   List,
   Button,
 } from "antd";
-import { getGameStatus } from "../../utils/game";
+import { createGame, getGameStatus } from "../../utils/game";
 import Board from "../../components/board";
 import { GameState } from "../../types/game";
 import NewGame from "../../components/actions/new-game";
@@ -90,6 +90,7 @@ const Game = () => {
     <Switch>
       <Route exact path={`${path}/spymaster`}>
         <WordList
+          gameState={gameState}
           red={gameState.teams.red}
           blue={gameState.teams.blue}
           spy={gameState.teams.black}
@@ -99,7 +100,6 @@ const Game = () => {
         <Row
           style={{
             height: "100vh",
-            overflowY: "hidden",
             paddingBottom: 0,
             backgroundColor: theme.backgroundColor,
           }}
@@ -115,6 +115,7 @@ const Game = () => {
                     style={{
                       paddingLeft: 3,
                       paddingRight: 3,
+                      marginBottom: 40,
                       backgroundColor: theme.backgroundColor,
                     }}
                     ghost={false}
@@ -159,6 +160,14 @@ const Game = () => {
                         Needs {blue} more
                       </Descriptions.Item>
                     </Descriptions>
+                    <Button
+                      onClick={() => {
+                        setIsSpymaster(false);
+                        updateGameState(createGame());
+                      }}
+                    >
+                      New Game
+                    </Button>
                     {/* <div>
                 <Timer initialTime={timer} direction="backward">
                   {({ reset }: any) => (
@@ -186,6 +195,7 @@ const Game = () => {
                       </Tabs.TabPane>
                       <Tabs.TabPane tab="Word List" key="2">
                         <WordList
+                          gameState={gameState}
                           red={gameState.teams.red}
                           blue={gameState.teams.blue}
                           spy={gameState.teams.black}
@@ -202,7 +212,6 @@ const Game = () => {
           <Col
             md={4}
             style={{
-              height: "100vh",
               width: "100%",
               position: "relative",
             }}
