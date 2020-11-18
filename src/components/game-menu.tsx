@@ -44,7 +44,7 @@ export const GameMenu = ({
     ),
   };
   const toggle = (
-    <div style={{ position: "fixed", top: 5, left: 5, zIndex: 1000 }}>
+    <div style={{ position: "fixed", bottom: 12, right: 10, zIndex: 1000 }}>
       <Toggle />
     </div>
   );
@@ -68,28 +68,28 @@ export const GameMenu = ({
     <>
       {toggle}
       {
-        <div
-          style={{
-            position: "absolute",
-            top: 20,
-            right: 0,
-            textAlign: "right",
-          }}
-        >
-          <Row justify="end">
-            <Col span={24}>
-              <QRCode
-                style={{ width: 100, height: 100 }}
-                value={
-                  window.location.origin +
-                  window.location.pathname +
-                  "/spymaster"
-                }
-              />
-            </Col>
-            <Col span={24}>Spymaster scan here ☝️</Col>
-          </Row>
-        </div>
+        // <div
+        //   style={{
+        //     position: "absolute",
+        //     top: 20,
+        //     right: 0,
+        //     textAlign: "right",
+        //   }}
+        // >
+        //   <Row justify="end">
+        //     <Col span={24}>
+        //       <QRCode
+        //         style={{ width: 100, height: 100 }}
+        //         value={
+        //           window.location.origin +
+        //           window.location.pathname +
+        //           "/spymaster"
+        //         }
+        //       />
+        //     </Col>
+        //     <Col span={24}>Spymaster scan here ☝️</Col>
+        //   </Row>
+        // </div>
       }
       {/* <Dropdown.Button
         overlay={<Menu>{menuOptions.newGame}</Menu>}

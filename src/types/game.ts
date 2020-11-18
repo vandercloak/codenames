@@ -1,4 +1,5 @@
 export interface GameState {
+  timerEnd?: string;
   teams: Teams;
   winner: Winner;
   cards: Cards;

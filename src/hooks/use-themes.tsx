@@ -4,15 +4,16 @@ const Context = React.createContext({} as any);
 
 export const themes = {
   light: {
-    color: "#141414",
+    color: "#000000",
     key: "light",
     body: "#e2e2e2",
     text: "#363537",
     toggleBorder: "#fff",
     gradient: "linear-gradient(#39598A, #79D7ED)",
     backgroundColor: "#fff",
-    border: "2px solid grey",
-    classOverride: "light-theme"
+    border: "1px solid #dcdcdc78",
+    classOverride: "light-theme",
+    boxShadow: "#8c888869 2px 3px 6px 1px",
   },
   dark: {
     color: "#fff",
@@ -21,10 +22,11 @@ export const themes = {
     text: "#FAFAFA",
     toggleBorder: "#6B8096",
     gradient: "linear-gradient(#091236, #1E215D)",
-    backgroundColor: "#141414",
+    backgroundColor: "#232222",
+    boxShadow: "",
     border: "",
-    classOverride: "dark-theme"
-  }
+    classOverride: "dark-theme",
+  },
 };
 
 function ThemeProvider({ ...props }: any) {
