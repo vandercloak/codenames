@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import React from "react";
 import "./start-button.css";
 
@@ -8,12 +9,12 @@ import "./start-button.css";
  */
 export default function StartButton(props: any) {
   return (
-    <button
+    <Button
       className="start-button"
       disabled={props.disabled}
       onClick={props.onClick}
     >
-      Click to start a call
-    </button>
+      Join Video Call
+    </Button>
   );
 }
