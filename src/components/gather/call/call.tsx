@@ -17,10 +17,14 @@ import CallObjectContext from "../../../contexts/call-object";
 import { logDailyEvent } from "../../../utils/log-util";
 import Tile from "../tile/tile";
 import CallMessage from "../call-message/call-message";
+import { Col, Row } from "antd";
+import { useRecoilValue } from "recoil";
+import { screenState } from "../view-state";
 
 export default function Call() {
   const callObject = useContext<DailyCall>(CallObjectContext);
   const [c, d] = useReducer<any>(callReducer, initialCallState);
+  const viewType = useRecoilValue(screenState);
   const dispatch: any = d;
   const callState: any = c;
   /**
@@ -131,29 +135,55 @@ export default function Call() {
     },
     [callObject]
   );
+  function getSpan(callCount: number) {
+    if (viewType === "tile") {
+      return 24;
+    }
+
+    switch (callCount) {
+      case 1:
+        return 18;
+      case 2:
+        return 12;
+      case 3:
+      case 4:
+        return 10;
+      case 5:
+      case 6:
+        return 8;
+      case 7:
+      case 8:
+      case 9:
+        return 7;
+      default:
+        return 5;
+    }
+  }
 
   function getTiles() {
     const tiles = Object.entries(callState.callItems).map(
       ([id, callItem]: any) => {
-        // const isLarge =
-        //   isScreenShare(id) ||
-        //   (!isLocal(id) && !containsScreenShare(callState.callItems));
+        const callCount = Object.keys(callState.callItems).length;
+        const span = getSpan(callCount);
+
         const tile = (
-          <Tile
-            key={id}
-            videoTrack={callItem.videoTrack}
-            audioTrack={callItem.audioTrack}
-            isLocalPerson={isLocal(id)}
-            isLarge={true}
-            isLoading={callItem.isLoading}
-            onClick={
-              isLocal(id)
-                ? null
-                : () => {
-                    sendHello(id);
-                  }
-            }
-          />
+          <Col span={span}>
+            <Tile
+              key={id}
+              videoTrack={callItem.videoTrack}
+              audioTrack={callItem.audioTrack}
+              isLocalPerson={isLocal(id)}
+              isLarge={true}
+              isLoading={callItem.isLoading}
+              onClick={
+                isLocal(id)
+                  ? null
+                  : () => {
+                      sendHello(id);
+                    }
+              }
+            />
+          </Col>
         );
         return tile;
       }
@@ -165,20 +195,9 @@ export default function Call() {
   const message = getMessage(callState);
   return (
     <div className="call">
-      {/* <div className="large-tiles"> */}
-      {
-        tiles
-        // !message
-        //   ? largeTiles
-        //   : null /* Avoid showing large tiles to make room for the message */
-      }
-      {/* {message && (
-        <CallMessage
-          header={message.header}
-          detail={message.detail}
-          isError={message.isError}
-        />
-      )} */}
+      <Row align="middle" justify="center" gutter={12}>
+        {tiles}
+      </Row>
     </div>
   );
 }

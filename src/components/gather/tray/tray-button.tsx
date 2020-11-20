@@ -20,6 +20,7 @@ export default function TrayButton(props: any) {
     <button
       disabled={props.disabled}
       onClick={props.onClick}
+      style={{ outline: "none" }}
       className={"tray-button" + (props.newButtonGroup ? " new-group" : "")}
     >
       <Icon type={props.type} highlighted={props.highlighted} />

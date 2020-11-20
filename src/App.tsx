@@ -11,6 +11,7 @@ import "antd/dist/antd.css";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { ThemeProvider } from "./hooks/use-themes";
 import "./app.scss";
+import { RecoilRoot } from "recoil";
 
 const subscriptionClient = new SubscriptionClient(
   "wss://codenames-hasura.herokuapp.com/v1/graphql",
@@ -29,10 +30,12 @@ const client = createClient({
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <URQLProvider value={client}>
-        <CodenameRouter />
-      </URQLProvider>
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider>
+        <URQLProvider value={client}>
+          <CodenameRouter />
+        </URQLProvider>
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }

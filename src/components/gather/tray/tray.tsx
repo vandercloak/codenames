@@ -9,7 +9,9 @@ import TrayButton, {
 import CallObjectContext from "../../../contexts/call-object";
 import DailyIframe, { DailyCall } from "@daily-co/daily-js";
 import { logDailyEvent } from "../../../utils/log-util";
-
+import { ExpandAltOutlined, ShrinkOutlined } from "@ant-design/icons";
+import { useRecoilState } from "recoil";
+import { screenState } from "../view-state";
 /**
  * Gets [isCameraMuted, isMicMuted, isSharingScreen].
  * This function is declared outside Tray() so it's not recreated every render
@@ -39,6 +41,7 @@ function getStreamStates(callObject: any) {
  */
 export default function Tray(props: any) {
   const callObject = useContext(CallObjectContext) as any;
+  const [viewType, setScreenState] = useRecoilState(screenState);
   const [isCameraMuted, setCameraMuted] = useState(false);
   const [isMicMuted, setMicMuted] = useState(false);
   const [isSharingScreen, setSharingScreen] = useState(false);
@@ -104,6 +107,17 @@ export default function Tray(props: any) {
         highlighted={isMicMuted}
         onClick={toggleMic}
       />
+      <button
+        disabled={props.disabled}
+        onClick={() =>
+          setScreenState((state) => (state === "tile" ? "full" : "tile"))
+        }
+        style={{ fontSize: 22, marginLeft: 0, paddingLeft: 0, outline: "none" }}
+        className={"tray-button" + (props.newButtonGroup ? " new-group" : "")}
+      >
+        {viewType === "tile" ? <ExpandAltOutlined /> : <ShrinkOutlined />}
+      </button>
+
       {/* {DailyIframe.supportedBrowser().supportsScreenShare && (
         <TrayButton
           type={TYPE_SCREEN}

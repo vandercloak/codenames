@@ -46,6 +46,8 @@ import {
 } from "date-fns";
 import FormItem from "antd/lib/form/FormItem";
 import { min, now } from "lodash";
+import { useRecoilValue } from "recoil";
+import { screenState } from "../../components/gather/view-state";
 const subscribeToGame = `
   subscription game_by_pk($id: String!) {
     res: game_by_pk(id: $id) {
@@ -70,6 +72,7 @@ const Game = () => {
     params: { id },
   } = useRouteMatch<{ id: string }>();
   const { theme, darkMode } = useThemes();
+  const viewType = useRecoilValue(screenState);
   const [result] = useSubscription({
     query: subscribeToGame,
     variables: { id },
@@ -132,7 +135,7 @@ const Game = () => {
             backgroundColor: theme.backgroundColor,
           }}
         >
-          <Col md={20}>
+          <Col xs={20} lg={18}>
             <div
               className={theme.classOverride}
               style={{ maxWidth: 1000, margin: "auto" }}
@@ -333,11 +336,9 @@ const Game = () => {
             </div>
           </Col>
           <Col
-            md={4}
-            style={{
-              width: "100%",
-              position: "relative",
-            }}
+            xs={viewType === "tile" ? 4 : undefined}
+            lg={viewType === "tile" ? 6 : undefined}
+            className={viewType === "full" ? "full-screen" : "tiles"}
           >
             <Gather />
           </Col>

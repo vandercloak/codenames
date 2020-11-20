@@ -8,6 +8,8 @@ import CallObjectContext from "../../contexts/call-object";
 import StartButton from "./start-button/start-button";
 import api from "./api";
 import Tray from "./tray/tray";
+import { useRecoilValue } from "recoil";
+import { screenState } from "./view-state";
 
 const STATE_IDLE = "STATE_IDLE";
 const STATE_CREATING = "STATE_CREATING";
@@ -18,6 +20,7 @@ const STATE_ERROR = "STATE_ERROR";
 
 export default function Gather() {
   const [appState, setAppState] = useState(STATE_IDLE);
+  const viewType = useRecoilValue(screenState);
   const [roomUrl, setRoomUrl] = useState("");
   const [callObject, setCallObject] = useState<null | DailyCall>(null);
 
@@ -210,18 +213,30 @@ export default function Gather() {
   const enableStartButton = appState === STATE_IDLE;
 
   return (
-    <div className="gather">
+    <div>
       {showCall ? (
         // NOTE: for an app this size, it's not obvious that using a Context
         // is the best choice. But for larger apps with deeply-nested components
         // that want to access call object state and bind event listeners to the
         // call object, this can be a helpful pattern.
         <CallObjectContext.Provider value={callObject}>
-          <Call />
-          <Tray
-            disabled={!enableCallButtons}
-            onClickLeaveCall={startLeavingCall}
-          />
+          <div
+            className={`gather${
+              viewType === "full" ? " position-row-center" : ""
+            }`}
+          >
+            <Call />
+          </div>
+          <div
+            className={`gather${
+              viewType === "full" ? " position-tray-bottom" : ""
+            }`}
+          >
+            <Tray
+              disabled={!enableCallButtons}
+              onClickLeaveCall={startLeavingCall}
+            />
+          </div>
         </CallObjectContext.Provider>
       ) : (
         <StartButton
