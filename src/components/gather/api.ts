@@ -19,7 +19,9 @@ async function createRoom() {
   //   room = await response.json();
   // return room;
   // Comment out the above and uncomment the below, using your own URL
-  return { url: "https://codenamez.daily.co/vks" };
+  const paths = window.location.pathname;
+
+  return { url: "https://codenamez.daily.co/" + paths[paths.length - 1] };
 }
 
 export default { createRoom };
