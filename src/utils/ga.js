@@ -55,7 +55,7 @@ const init = (options = {}) => {
 
   if (isGAEnabled) {
     ReactGA.initialize("G-HWLJKK121Z", {
-      debug: true,
+      debug: false,
       ...options,
     });
   }
