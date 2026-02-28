@@ -15,7 +15,7 @@
     "graphql": "^14.6.0",
     "graphql-type-json": "^0.3.1",
     "moment": "^2.29.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^9.0.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
     "react": "16.12.0",
@@ -39,7 +39,7 @@
     "@types/qrcode.react": "^1.0.1",
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.0.1",
-    "react-scripts": "^3.4.0",
+    "react-scripts": "^5.0.1",
     "typescript": "^3.8.3"
   },
   "scripts": {
